@@ -1,5 +1,6 @@
 package com.linuxluigi.edu.controller;
 
+import com.linuxluigi.edu.model.Model;
 import com.linuxluigi.edu.view.MainFrame;
 
 /**
@@ -8,12 +9,13 @@ import com.linuxluigi.edu.view.MainFrame;
 public class Controller {
 
     // Model
-    //private Editor editor;
+    private Model model;
 
     // View
     private MainFrame view;
 
-    public Controller(MainFrame view) {
+    public Controller(Model model, MainFrame view) {
+        this.model = model;
         this.view = view;
     }
 

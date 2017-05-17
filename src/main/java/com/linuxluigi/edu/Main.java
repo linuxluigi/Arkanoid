@@ -1,6 +1,7 @@
 package com.linuxluigi.edu;
 
 import com.linuxluigi.edu.controller.Controller;
+import com.linuxluigi.edu.model.Model;
 import com.linuxluigi.edu.view.MainFrame;
 
 /**
@@ -8,13 +9,13 @@ import com.linuxluigi.edu.view.MainFrame;
  */
 public class Main  {
     public static void main(String[] args) {
-        // model
-        //Editor editor = new Editor(primaryStage);
+        // Model
+        Model model = new Model();
 
         MainFrame view = new MainFrame();
 
         // controller
-        Controller controller = new Controller(view);
+        Controller controller = new Controller(model, view);
         controller.show();
         //controller.addEventHandler();
     }
