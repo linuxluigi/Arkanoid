@@ -72,7 +72,7 @@ public class MainFrame {
         // View Menu
         Menu viewMenu = new Menu("View", new ImageView("/fontAwesome/16/font-awesome_4-7-0_window-maximize_16_0_f39c12_none.png"));
 
-        MenuItem fullscreenMenuIten = new MenuItem("Fullscreen", new ImageView("/fontAwesome/16/font-awesome_4-7-0_arrows-alt_16_0_f39c12_none.png"));
+        MenuItem fullscreenMenuIten = new MenuItem("MenubarViewFullscreen", new ImageView("/fontAwesome/16/font-awesome_4-7-0_arrows-alt_16_0_f39c12_none.png"));
         fullscreenMenuIten.setAccelerator(KeyCombination.keyCombination("shortcut+f"));
 
         MenuItem toolbarMenuIten = new MenuItem("Disable Toolbar", new ImageView("/fontAwesome/16/font-awesome_4-7-0_bars_16_0_f39c12_none.png"));

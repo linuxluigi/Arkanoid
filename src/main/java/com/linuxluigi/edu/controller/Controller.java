@@ -28,6 +28,14 @@ public class Controller {
     public void addEventHandler() {
         AddMenuBarEventHandler.addMenuBarEventHandler(this.view.getMenuBar());
     }
+
+    protected static Model getModel() {
+        return model;
+    }
+
+    protected static MainFrame getView() {
+        return view;
+    }
 }
 
 

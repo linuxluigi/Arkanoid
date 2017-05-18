@@ -1,9 +1,7 @@
 package com.linuxluigi.edu.view;
 
-import com.linuxluigi.edu.controller.eventhandler.menubar.edit.EditLevel;
-import com.linuxluigi.edu.controller.eventhandler.menubar.level.*;
-import com.linuxluigi.edu.controller.eventhandler.menubar.view.DisableToolbar;
-import com.linuxluigi.edu.controller.eventhandler.menubar.view.Fullscreen;
+import com.linuxluigi.edu.controller.*;
+import com.linuxluigi.edu.controller.MenubarEditLevel;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 
@@ -18,19 +16,19 @@ public class AddMenuBarEventHandler {
         Menu levelMenu = menuBar.getMenus().get(0);
 
         // new Level Item
-        levelMenu.getItems().get(0).setOnAction(new NewLevel());
+        levelMenu.getItems().get(0).setOnAction(new MenubarLevelNewLevel());
 
         // open Level Item
-        levelMenu.getItems().get(1).setOnAction(new OpenLevel());
+        levelMenu.getItems().get(1).setOnAction(new MenubarLevelOpenLevel());
 
         // save Level Item
-        levelMenu.getItems().get(2).setOnAction(new SaveLevel());
+        levelMenu.getItems().get(2).setOnAction(new MenubarLevelSaveLevel());
 
         // save as Level Item
-        levelMenu.getItems().get(3).setOnAction(new SaveAsLevel());
+        levelMenu.getItems().get(3).setOnAction(new MenubarLevelSaveAsLevel());
 
         // exit Level Item
-        levelMenu.getItems().get(5).setOnAction(new Exit());
+        levelMenu.getItems().get(5).setOnAction(new MenubarLevelExit());
 
 
 
@@ -38,7 +36,7 @@ public class AddMenuBarEventHandler {
         Menu editMenu = menuBar.getMenus().get(1);
 
         // edit edit Item
-        editMenu.getItems().get(0).setOnAction(new EditLevel());
+        editMenu.getItems().get(0).setOnAction(new MenubarEditLevel());
 
 
 
@@ -46,10 +44,10 @@ public class AddMenuBarEventHandler {
         Menu viewMenu = menuBar.getMenus().get(2);
 
         // view fullscreen Item
-        viewMenu.getItems().get(0).setOnAction(new Fullscreen());
+        viewMenu.getItems().get(0).setOnAction(new MenubarViewFullscreen());
 
         // view toolbar Item
-        viewMenu.getItems().get(1).setOnAction(new DisableToolbar());
+        viewMenu.getItems().get(1).setOnAction(new MenubarViewDisableToolbar());
     }
 
 }
