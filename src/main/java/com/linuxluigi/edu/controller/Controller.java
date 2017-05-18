@@ -3,16 +3,17 @@ package com.linuxluigi.edu.controller;
 import com.linuxluigi.edu.model.Model;
 import com.linuxluigi.edu.view.MainFrame;
 
+import com.linuxluigi.edu.view.AddMenuBarEventHandler;
 /**
  * Created by fubu on 17.05.17.
  */
 public class Controller {
 
     // Model
-    private Model model;
+    private static Model model;
 
     // View
-    private MainFrame view;
+    private static MainFrame view;
 
     public Controller(Model model, MainFrame view) {
         this.model = model;
@@ -20,6 +21,13 @@ public class Controller {
     }
 
     public void show() {
-        this.view.show();
+        this.view.show(model.getPrimaryStage());
+        addEventHandler();
+    }
+
+    public void addEventHandler() {
+        AddMenuBarEventHandler.addMenuBarEventHandler(this.view.getMenuBar());
     }
 }
+
+

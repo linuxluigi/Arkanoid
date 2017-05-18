@@ -4,6 +4,7 @@ import com.linuxluigi.edu.model.board.Board;
 import com.linuxluigi.edu.model.game.Game;
 import com.linuxluigi.edu.model.game.Highscore;
 import com.linuxluigi.edu.model.level.Level;
+import javafx.stage.Stage;
 
 /**
  * Created by fubu on 17.05.17.
@@ -14,8 +15,10 @@ public class Model {
     private Game game;
     private Highscore highscore;
     private Level level;
+    private Stage primaryStage = null;
 
-    public Model() {
+    public Model(Stage primaryStage) {
+        this.primaryStage = primaryStage;
         this.board = new Board();
         this.game = new Game();
         this.highscore = new Highscore();
@@ -52,5 +55,9 @@ public class Model {
 
     public void setLevel(Level level) {
         this.level = level;
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

@@ -2,52 +2,44 @@ package com.linuxluigi.edu.view;/**
  * Created by fubu on 17.05.17.
  */
 
-import javafx.application.Application;
+import javafx.event.ActionEvent;
 import javafx.scene.Scene;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class MainFrame extends Application {
+public class MainFrame {
 
     private Scene scene;
     private MenuBar menuBar;
-    private Stage primaryStage;
     private BorderPane borderPane;
+    private Stage primaryStage;
+    private HBox editBox;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
-
-    @Override
-    public void start(Stage primaryStage) {
-
-        this.primaryStage = primaryStage;
-
-        primaryStage.setTitle("ArkanoidFx");
+    public MainFrame() {
         this.borderPane = new BorderPane();
         this.scene = new Scene(this.borderPane, 800, 600);
 
         // set boarder center
 
         // set boarder top
-        setMenuBar(primaryStage);
+        setMenuBar();
         this.borderPane.setTop(this.menuBar);
 
-        primaryStage.setScene(this.scene);
-        primaryStage.show();
-
+        // set border bottom
+        setEditBox();
+        this.borderPane.setBottom(this.editBox);
     }
 
-    private void setMenuBar(Stage primaryStage) {
+    private void setMenuBar() {
         // tutorial http://www.java2s.com/Tutorials/Java/JavaFX/0560__JavaFX_Menu.htm
         this.menuBar = new MenuBar();
-        this.menuBar.prefWidthProperty().bind(primaryStage.widthProperty());
 
         // File menu - new, save, exit
         Menu fileMenu = new Menu("Level", new ImageView("/fontAwesome/16/font-awesome_4-7-0_globe_16_0_f39c12_none.png"));
@@ -91,10 +83,30 @@ public class MainFrame extends Application {
         this.menuBar.getMenus().addAll(fileMenu, editMenu, viewMenu);
     }
 
+    private void setEditBox() {
+        this.editBox = new HBox();
+
+        final ColorPicker colorPicker = new ColorPicker();
+        colorPicker.setValue(Color.RED);
+
+        final Text text = new Text("Color picker:");
+        text.setFill(colorPicker.getValue());
+
+
+
+        colorPicker.setOnAction((ActionEvent t) -> {
+            text.setFill(colorPicker.getValue());
+        });
+
+
+
+        this.editBox.getChildren().addAll(colorPicker, text);
+    }
+
     /**
      * Make the Toolbar in / visible
      */
-    public void flipToolbarVisibility() {
+    public void toogleToolbarVisibility() {
         if (this.borderPane.getTop() != null) {
             this.borderPane.setTop(null);
         } else {
@@ -102,7 +114,26 @@ public class MainFrame extends Application {
         }
     }
 
-    public void show() {
-        launch();
+    public MenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public void show(Stage stage) {
+        this.primaryStage = stage;
+        stage.setTitle("Arkanoid XD");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    public void fullscreenToggle() {
+        this.primaryStage.setFullScreen(!this.primaryStage.isFullScreen());
+    }
+
+    public void toggleEditBox() {
+        if (this.borderPane.getBottom() != null) {
+            this.borderPane.setBottom(null);
+        } else {
+            this.borderPane.setBottom(this.editBox);
+        }
     }
 }
