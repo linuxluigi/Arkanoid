@@ -88,6 +88,7 @@ public class Model {
     }
 
     public void setPlayerCenter(double width, double height) {
+        System.out.println("main model: " + height);
         playerBare.setCenter(width, height);
     }
 }

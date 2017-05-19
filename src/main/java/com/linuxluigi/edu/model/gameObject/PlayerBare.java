@@ -14,6 +14,8 @@ public class PlayerBare {
     private double width;
     private double height;
 
+    private final double minPositionY = 864; // 70 % of the field
+
     private Color color;
 
     public PlayerBare(double positionX, double positionY, double lengthX, double lengthY, Color color) {
@@ -26,9 +28,9 @@ public class PlayerBare {
 
     public PlayerBare() {
         PositionX = 100;
-        PositionY = 100;
-        this.width = 50;
-        this.height = 10;
+        PositionY = 864;
+        this.width = 250;
+        this.height = 50;
         this.color = Color.GREEN;
     }
 
@@ -89,7 +91,17 @@ public class PlayerBare {
     }
 
     public void setCenter(double width, double height) {
-        setPositionX(absoluteWidth(width));
-        setPositionY(absoluteHeight(height));
+        // width
+        setPositionX(absoluteWidth(width) - this.width / 2);
+
+        // height
+        double absoluteHeight = absoluteHeight(height);
+
+        if (absoluteHeight > this.minPositionY) {
+            setPositionY(absoluteHeight - this.height / 2);
+        } else {
+            setPositionY(this.minPositionY - this.height / 2);
+        }
+
     }
 }

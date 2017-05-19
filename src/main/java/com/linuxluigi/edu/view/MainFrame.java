@@ -5,6 +5,7 @@ package com.linuxluigi.edu.view;/**
 import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
+import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -164,8 +165,10 @@ public class MainFrame {
     public void toggleEditBox() {
         if (this.borderPane.getBottom() != null) {
             this.borderPane.setBottom(null);
+            this.scene.setCursor(Cursor.NONE);
         } else {
             this.borderPane.setBottom(this.editBox);
+            this.scene.setCursor(Cursor.DEFAULT);
         }
     }
 
