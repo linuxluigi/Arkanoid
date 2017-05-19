@@ -91,7 +91,12 @@ public class MainFrame {
     private void setPane() {
         //create a pane for a group with all moving objects
         this.pane = new Pane(group);
-        this.pane.setStyle("-fx-background-color: lightsteelblue;");
+        this.pane.setStyle(
+                "-fx-background-image: url('/background/pixabay-com-hintergrund-textur-material-grafik-1988181.jpg'); " +
+                        "-fx-background-repeat: stretch; " +
+                        "-fx-background-position: center center;" +
+                        "-fx-background-size: cover;"
+        );
     }
 
     private void setEditBox() {
