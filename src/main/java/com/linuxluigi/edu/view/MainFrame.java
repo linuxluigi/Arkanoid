@@ -2,6 +2,8 @@ package com.linuxluigi.edu.view;/**
  * Created by fubu on 17.05.17.
  */
 
+import com.linuxluigi.edu.model.gameObject.PlayerBare;
+import javafx.animation.AnimationTimer;
 import javafx.event.ActionEvent;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -12,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -25,9 +28,12 @@ public class MainFrame {
     private Pane pane;
     private Group group = new Group();
 
-    public MainFrame() {
+    // Game Objects
+    private Rectangle playerBare;
+
+    public MainFrame(double startWidth, double startHeight) {
         this.borderPane = new BorderPane();
-        this.scene = new Scene(this.borderPane, 800, 600);
+        this.scene = new Scene(this.borderPane, startWidth, startHeight);
 
         // set boarder top
         setMenuBar();
@@ -114,7 +120,6 @@ public class MainFrame {
         });
 
 
-
         this.editBox.getChildren().addAll(colorPicker, text);
     }
 
@@ -162,5 +167,41 @@ public class MainFrame {
         } else {
             this.borderPane.setBottom(this.editBox);
         }
+    }
+
+    /**
+     * Init game with new Level, Ball, Lives & Player
+     * @param playerBare
+     */
+    public void initGame (PlayerBare playerBare) {
+        this.playerBare = new Rectangle(playerBare.getRelativWidth(), playerBare.getRelativHeight());
+        this.playerBare.setX(playerBare.getRelativPositionX());
+        this.playerBare.setY(playerBare.getRelativPositionY());
+        this.playerBare.setFill(playerBare.getColor());
+        this.group.getChildren().add(this.playerBare); //add obect to the group
+    }
+
+    public void updateAllObjects(PlayerBare playerBare) {
+        // playerBare
+        this.playerBare.setWidth(playerBare.getRelativWidth());
+        this.playerBare.setHeight(playerBare.getRelativHeight());
+        this.playerBare.setX(playerBare.getRelativPositionX());
+        this.playerBare.setY(playerBare.getRelativPositionY());
+        this.playerBare.setFill(playerBare.getColor());
+    }
+
+    private void setAnimationTimer() {
+        new AnimationTimer() { //animate all circles
+            @Override
+            public void handle(long now) {
+
+                // set playerBar position
+
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                }
+            }
+        }.start();
     }
 }

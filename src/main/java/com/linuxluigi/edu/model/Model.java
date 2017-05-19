@@ -3,6 +3,7 @@ package com.linuxluigi.edu.model;
 import com.linuxluigi.edu.model.board.Board;
 import com.linuxluigi.edu.model.game.Game;
 import com.linuxluigi.edu.model.game.Highscore;
+import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import com.linuxluigi.edu.model.level.Level;
 import javafx.stage.Stage;
 
@@ -17,12 +18,29 @@ public class Model {
     private Level level;
     private Stage primaryStage = null;
 
-    public Model(Stage primaryStage) {
+    private PlayerBare playerBare;
+
+    public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
         this.board = new Board();
         this.game = new Game();
         this.highscore = new Highscore();
         this.level = new Level();
+        setWindowWidth(startWidth);
+        setWindowHeight(startHeight);
+        init();
+    }
+
+    private void init() {
+        this.playerBare = new PlayerBare();
+    }
+
+    public PlayerBare getPlayerBare() {
+        return playerBare;
+    }
+
+    public void setPlayerBare(PlayerBare playerBare) {
+        this.playerBare = playerBare;
     }
 
     public Board getBoard() {
@@ -59,5 +77,13 @@ public class Model {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public void setWindowWidth(double width) {
+        StaticVar.setWindowWidth(width);
+    }
+
+    public void setWindowHeight(double height) {
+        StaticVar.setWindowHeigh(height);
     }
 }

@@ -17,10 +17,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
 
-        // Model
-        Model model = new Model(primaryStage);
+        double startWidth = 800;
+        double startHeight = 600;
 
-        MainFrame view = new MainFrame();
+        // Model
+        Model model = new Model(primaryStage, startWidth, startHeight);
+
+        MainFrame view = new MainFrame(startWidth, startHeight);
 
         // controller
         Controller controller = new Controller(model, view);
