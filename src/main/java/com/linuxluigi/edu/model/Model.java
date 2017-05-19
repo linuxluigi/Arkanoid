@@ -86,4 +86,8 @@ public class Model {
     public void setWindowHeight(double height) {
         StaticVar.setWindowHeigh(height);
     }
+
+    public void setPlayerCenter(double width, double height) {
+        playerBare.setCenter(width, height);
+    }
 }

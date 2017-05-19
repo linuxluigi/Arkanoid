@@ -2,8 +2,7 @@ package com.linuxluigi.edu.model.gameObject;
 
 import javafx.scene.paint.Color;
 
-import static com.linuxluigi.edu.model.StaticVar.relativeHeight;
-import static com.linuxluigi.edu.model.StaticVar.relativeWidth;
+import static com.linuxluigi.edu.model.StaticVar.*;
 
 /**
  * Created by fubu on 19.05.17.
@@ -87,5 +86,10 @@ public class PlayerBare {
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void setCenter(double width, double height) {
+        setPositionX(absoluteWidth(width));
+        setPositionY(absoluteHeight(height));
     }
 }

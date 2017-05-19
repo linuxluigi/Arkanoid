@@ -195,8 +195,6 @@ public class MainFrame {
             @Override
             public void handle(long now) {
 
-                // set playerBar position
-
                 try {
                     Thread.sleep(10);
                 } catch (InterruptedException e) {

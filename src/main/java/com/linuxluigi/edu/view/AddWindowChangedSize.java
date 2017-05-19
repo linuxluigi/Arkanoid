@@ -1,5 +1,6 @@
 package com.linuxluigi.edu.view;
 
+import com.linuxluigi.edu.controller.Controller;
 import com.linuxluigi.edu.controller.WindowChangedHeight;
 import com.linuxluigi.edu.controller.WindowChangedWidth;
 import javafx.scene.Scene;

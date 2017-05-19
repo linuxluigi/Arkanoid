@@ -1,6 +1,7 @@
 package com.linuxluigi.edu.controller;
 
 import com.linuxluigi.edu.model.Model;
+import com.linuxluigi.edu.view.AddMouseHandler;
 import com.linuxluigi.edu.view.AddWindowChangedSize;
 import com.linuxluigi.edu.view.MainFrame;
 
@@ -30,6 +31,8 @@ public class Controller {
     public void addEventHandler() {
         AddMenuBarEventHandler.addMenuBarEventHandler(this.view.getMenuBar());
         AddWindowChangedSize.addWindowChangedSize(this.view.getScene());
+        AddMouseHandler.addMouseMovemntEvent(this.view.getScene());
+
     }
 
     protected static void updateViewObjects() {

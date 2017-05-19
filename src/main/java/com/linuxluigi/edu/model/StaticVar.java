@@ -33,6 +33,18 @@ public class StaticVar {
         return relativHeightPosition;
     }
 
+    public static double absoluteHeight(double ObjectHeight) {
+        double relativeHeightPercent = 100 * windowHeigh / defaultHeight;
+        double absoluteHeight = 100 * ObjectHeight / relativeHeightPercent;
+        return absoluteHeight;
+    }
+
+    public static double absoluteWidth(double ObjectWidth) {
+        double relativeWidthPercent = 100 * windowWidth / defaultWidth;
+        double absoluteWidth = 100 * ObjectWidth / relativeWidthPercent;
+        return absoluteWidth;
+    }
+
     public static void setWindowWidth(double windowWidth) {
         StaticVar.windowWidth = windowWidth;
     }
