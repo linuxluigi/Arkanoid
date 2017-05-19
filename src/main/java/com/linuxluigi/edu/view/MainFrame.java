@@ -3,13 +3,14 @@ package com.linuxluigi.edu.view;/**
  */
 
 import javafx.event.ActionEvent;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,12 +22,12 @@ public class MainFrame {
     private BorderPane borderPane;
     private Stage primaryStage;
     private HBox editBox;
+    private Pane pane;
+    private Group group = new Group();
 
     public MainFrame() {
         this.borderPane = new BorderPane();
         this.scene = new Scene(this.borderPane, 800, 600);
-
-        // set boarder center
 
         // set boarder top
         setMenuBar();
@@ -35,6 +36,10 @@ public class MainFrame {
         // set border bottom
         setEditBox();
         this.borderPane.setBottom(this.editBox);
+
+        // set boarder center
+        setPane();
+        this.borderPane.setCenter(this.pane);
     }
 
     private void setMenuBar() {
@@ -83,6 +88,12 @@ public class MainFrame {
         this.menuBar.getMenus().addAll(fileMenu, editMenu, viewMenu);
     }
 
+    private void setPane() {
+        //create a pane for a group with all moving objects
+        this.pane = new Pane(group);
+        this.pane.setStyle("-fx-background-color: lightsteelblue;");
+    }
+
     private void setEditBox() {
         this.editBox = new HBox();
 
@@ -91,7 +102,6 @@ public class MainFrame {
 
         final Text text = new Text("Color picker:");
         text.setFill(colorPicker.getValue());
-
 
 
         colorPicker.setOnAction((ActionEvent t) -> {
@@ -118,11 +128,23 @@ public class MainFrame {
         return menuBar;
     }
 
+    public Scene getScene() {
+        return scene;
+    }
+
     public void show(Stage stage) {
         this.primaryStage = stage;
         stage.setTitle("Arkanoid XD");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public double getPaneWidth() {
+        return pane.widthProperty().get();
+    }
+
+    public double getPaneHeight() {
+        return pane.heightProperty().get();
     }
 
     public void fullscreenToggle() {

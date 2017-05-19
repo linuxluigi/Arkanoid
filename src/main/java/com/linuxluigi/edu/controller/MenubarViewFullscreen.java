@@ -9,6 +9,6 @@ import javafx.event.EventHandler;
  */
 public class MenubarViewFullscreen implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
-        System.out.println("as");
+        Controller.getView().fullscreenToggle();
     }
 }
