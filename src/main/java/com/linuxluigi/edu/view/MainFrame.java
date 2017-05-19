@@ -4,7 +4,10 @@ package com.linuxluigi.edu.view;/**
 
 import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import javafx.animation.AnimationTimer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
+import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -108,20 +111,43 @@ public class MainFrame {
 
     private void setEditBox() {
         this.editBox = new HBox();
+        this.editBox.setPadding(new Insets(15, 12, 15, 12));
+        this.editBox.setSpacing(10);
 
+        // Color Picker
         final ColorPicker colorPicker = new ColorPicker();
         colorPicker.setValue(Color.RED);
 
-        final Text text = new Text("Color picker:");
-        text.setFill(colorPicker.getValue());
-
-
-        colorPicker.setOnAction((ActionEvent t) -> {
-            text.setFill(colorPicker.getValue());
+        // Block Points
+        final Text pointsLabel = new Text("Block Points:");
+        TextField pointsTextField = new TextField ();
+        // check for numbers only
+        pointsTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if (newValue.matches("\\d*")) {
+                    int value = Integer.parseInt(newValue);
+                } else {
+                    pointsTextField.setText(oldValue);
+                }
+            }
         });
 
+        // Visible
+        CheckBox visibleCheckbox = new CheckBox();
+        visibleCheckbox.setText("Visible");
+        visibleCheckbox.setSelected(true);
 
-        this.editBox.getChildren().addAll(colorPicker, text);
+        // Undestroyable
+        CheckBox undestroyableCheckBox = new CheckBox("Second");
+        undestroyableCheckBox.setText("Undestroyable");
+
+        this.editBox.getChildren().addAll(
+                colorPicker,
+                pointsLabel,
+                pointsTextField,
+                visibleCheckbox,
+                undestroyableCheckBox
+        );
     }
 
     /**
@@ -165,10 +191,16 @@ public class MainFrame {
     public void toggleEditBox() {
         if (this.borderPane.getBottom() != null) {
             this.borderPane.setBottom(null);
+
+            // make Cursor & player invisible
             this.scene.setCursor(Cursor.NONE);
+            this.playerBare.setVisible(true);
         } else {
             this.borderPane.setBottom(this.editBox);
+
+            // make Cursor & player invisible
             this.scene.setCursor(Cursor.DEFAULT);
+            this.playerBare.setVisible(false);
         }
     }
 
