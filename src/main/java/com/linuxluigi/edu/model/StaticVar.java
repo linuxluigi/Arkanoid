@@ -7,9 +7,12 @@ public class StaticVar {
     public static final double defaultWidth = 1920;
     public static final double defaultHeight = 1080;
 
-    // todo change default value
     private static double windowWidth;
     private static double windowHeigh;
+
+    // field for player & blocks in px
+    public static final double playerAreaHeight = 864; // 80%
+    public static final double blockAreaHeight = 432; // 40%
 
     /**
      * Generate relative postion of width

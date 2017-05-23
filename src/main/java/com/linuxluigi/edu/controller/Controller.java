@@ -1,11 +1,8 @@
 package com.linuxluigi.edu.controller;
 
 import com.linuxluigi.edu.model.Model;
-import com.linuxluigi.edu.view.AddMouseHandler;
-import com.linuxluigi.edu.view.AddWindowChangedSize;
-import com.linuxluigi.edu.view.MainFrame;
+import com.linuxluigi.edu.view.*;
 
-import com.linuxluigi.edu.view.AddMenuBarEventHandler;
 /**
  * Created by fubu on 17.05.17.
  */
@@ -25,19 +22,20 @@ public class Controller {
     public void show() {
         this.view.show(model.getPrimaryStage());
         addEventHandler();
-        this.view.initGame(model.getPlayerBare());
+        this.view.initGame(model.getPlayerBare(), model.getBoard());
     }
 
     public void addEventHandler() {
         AddMenuBarEventHandler.addMenuBarEventHandler(this.view.getMenuBar());
         AddWindowChangedSize.addWindowChangedSize(this.view.getScene());
         AddMouseHandler.addMouseMovemntEvent(this.view.getScene());
+        AddClickEvent.addClickEvent(this.view.getScene());
 
     }
 
     protected static void updateViewObjects() {
-        view.updateAllObjects(getModel().getPlayerBare());
-        //todo add
+        view.updateAllObjects(getModel().getPlayerBare(), getModel().getBoard());
+        //todo add stones && ball && points && live
     }
 
     protected static Model getModel() {

@@ -10,5 +10,12 @@ import javafx.event.EventHandler;
 public class MenubarViewFullscreen implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         Controller.getView().fullscreenToggle();
+        Controller.getModel().setFullscreen(!Controller.getModel().isFullscreen());
+
+        if (Controller.getModel().isFullscreen() && !Controller.getModel().isEditmode()) {
+            Controller.getView().disableMouseCursor();
+        }
+
+        //todo disable mac toolbar
     }
 }

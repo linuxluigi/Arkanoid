@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 public class MenubarEditLevel implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         Controller.getView().toggleEditBox();
-        //todo add in model the edit mode as well
+        Controller.getModel().setEditmode(!Controller.getModel().isEditmode());
+
     }
 }

@@ -14,8 +14,6 @@ public class PlayerBare {
     private double width;
     private double height;
 
-    private final double minPositionY = 864; // 70 % of the field
-
     private Color color;
 
     public PlayerBare(double positionX, double positionY, double lengthX, double lengthY, Color color) {
@@ -97,10 +95,10 @@ public class PlayerBare {
         // height
         double absoluteHeight = absoluteHeight(height);
 
-        if (absoluteHeight > this.minPositionY) {
+        if (absoluteHeight > playerAreaHeight) {
             setPositionY(absoluteHeight - this.height / 2);
         } else {
-            setPositionY(this.minPositionY - this.height / 2);
+            setPositionY(playerAreaHeight - this.height / 2);
         }
 
     }

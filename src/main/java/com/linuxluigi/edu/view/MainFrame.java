@@ -2,8 +2,11 @@ package com.linuxluigi.edu.view;/**
  * Created by fubu on 17.05.17.
  */
 
+import com.linuxluigi.edu.model.board.Board;
+import com.linuxluigi.edu.model.board.Stone;
 import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -12,6 +15,10 @@ import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuBar;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
@@ -21,6 +28,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
+
+import java.awt.*;
+import java.util.*;
+import java.util.List;
 
 public class MainFrame {
 
@@ -32,8 +44,16 @@ public class MainFrame {
     private Pane pane;
     private Group group = new Group();
 
+    // EditDock
+    private final ColorPicker colorPicker = new ColorPicker();
+    private TextField pointsTextField;
+    private CheckBox visibleCheckbox;
+    private CheckBox undestroyableCheckBox;
+
     // Game Objects
+    private Group stonesRectangle = new Group();
     private Rectangle playerBare;
+    private java.util.List<Rectangle> stones = new ArrayList<Rectangle>();
 
     public MainFrame(double startWidth, double startHeight) {
         this.borderPane = new BorderPane();
@@ -45,7 +65,7 @@ public class MainFrame {
 
         // set border bottom
         setEditBox();
-        this.borderPane.setBottom(this.editBox);
+        // this.borderPane.setBottom(this.editBox);
 
         // set boarder center
         setPane();
@@ -100,7 +120,7 @@ public class MainFrame {
 
     private void setPane() {
         //create a pane for a group with all moving objects
-        this.pane = new Pane(group);
+        this.pane = new Pane(this.group, this.stonesRectangle);
         this.pane.setStyle(
                 "-fx-background-image: url('/background/pixabay-com-hintergrund-textur-material-grafik-1988181.jpg'); " +
                         "-fx-background-repeat: stretch; " +
@@ -115,15 +135,15 @@ public class MainFrame {
         this.editBox.setSpacing(10);
 
         // Color Picker
-        final ColorPicker colorPicker = new ColorPicker();
-        colorPicker.setValue(Color.RED);
+        this.colorPicker.setValue(Color.RED);
 
         // Block Points
         final Text pointsLabel = new Text("Block Points:");
-        TextField pointsTextField = new TextField ();
+        this.pointsTextField = new TextField();
         // check for numbers only
-        pointsTextField.textProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+        this.pointsTextField.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if (newValue.matches("\\d*")) {
                     int value = Integer.parseInt(newValue);
                 } else {
@@ -133,20 +153,20 @@ public class MainFrame {
         });
 
         // Visible
-        CheckBox visibleCheckbox = new CheckBox();
-        visibleCheckbox.setText("Visible");
-        visibleCheckbox.setSelected(true);
+        this.visibleCheckbox = new CheckBox();
+        this.visibleCheckbox.setText("Visible");
+        this.visibleCheckbox.setSelected(true);
 
         // Undestroyable
-        CheckBox undestroyableCheckBox = new CheckBox("Second");
-        undestroyableCheckBox.setText("Undestroyable");
+        this.undestroyableCheckBox = new CheckBox("Second");
+        this.undestroyableCheckBox.setText("Undestroyable");
 
         this.editBox.getChildren().addAll(
-                colorPicker,
+                this.colorPicker,
                 pointsLabel,
-                pointsTextField,
-                visibleCheckbox,
-                undestroyableCheckBox
+                this.pointsTextField,
+                this.visibleCheckbox,
+                this.undestroyableCheckBox
         );
     }
 
@@ -193,36 +213,104 @@ public class MainFrame {
             this.borderPane.setBottom(null);
 
             // make Cursor & player invisible
-            this.scene.setCursor(Cursor.NONE);
+            disableMouseCursor();
             this.playerBare.setVisible(true);
         } else {
             this.borderPane.setBottom(this.editBox);
 
             // make Cursor & player invisible
-            this.scene.setCursor(Cursor.DEFAULT);
+            enableMouseCursor();
             this.playerBare.setVisible(false);
         }
     }
 
     /**
      * Init game with new Level, Ball, Lives & Player
+     *
      * @param playerBare
      */
-    public void initGame (PlayerBare playerBare) {
+    public void initGame(PlayerBare playerBare, Board board) {
+
+        // Playerbare
         this.playerBare = new Rectangle(playerBare.getRelativWidth(), playerBare.getRelativHeight());
         this.playerBare.setX(playerBare.getRelativPositionX());
         this.playerBare.setY(playerBare.getRelativPositionY());
         this.playerBare.setFill(playerBare.getColor());
         this.group.getChildren().add(this.playerBare); //add obect to the group
+
+        // Stones
+        for (Stone stone : board.getStones()) {
+            Rectangle stoneRectangle = new Rectangle();
+            stoneRectangle.setX(stone.getRelativePositionX());
+            stoneRectangle.setY(stone.getRelativePositionY());
+            stoneRectangle.setWidth(stone.getRelativeWidth());
+            stoneRectangle.setHeight(stone.getRelativeHeight());
+            stoneRectangle.setFill(stone.getColor());
+            stoneRectangle.setVisible(stone.isVisible());
+            stoneRectangle.setStroke(Color.BLACK);
+            this.stones.add(stoneRectangle);
+            this.stonesRectangle.getChildren().add(stoneRectangle); //add obect to the group
+        }
     }
 
-    public void updateAllObjects(PlayerBare playerBare) {
+    public void updateAllObjects(PlayerBare playerBare, Board board) {
         // playerBare
         this.playerBare.setWidth(playerBare.getRelativWidth());
         this.playerBare.setHeight(playerBare.getRelativHeight());
         this.playerBare.setX(playerBare.getRelativPositionX());
         this.playerBare.setY(playerBare.getRelativPositionY());
         this.playerBare.setFill(playerBare.getColor());
+
+        // Stones
+        List<Stone> oldStones = board.getStones();
+
+        for (int i = 0; i < this.stones.size(); i++) {
+            stones.get(i).setFill(oldStones.get(i).getColor());
+            stones.get(i).setVisible(oldStones.get(i).isVisible());
+        }
+    }
+
+    public void disableMouseCursor() {
+        this.scene.setCursor(Cursor.NONE);
+    }
+
+    public void enableMouseCursor() {
+        this.scene.setCursor(Cursor.DEFAULT);
+    }
+
+    public void setMousePosition(double positionX, double positionY) {
+        Platform.runLater(() -> {
+            try {
+                Robot robot = new Robot();
+                robot.mouseMove((int) positionX, (int) positionY);
+
+            } catch (AWTException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    /**
+     * Return a Stone with the value of the EditDock
+     * @return Stone object
+     */
+    public Stone getEditStone() {
+
+        int points;
+
+        if (this.pointsTextField.getText().equals("")) {
+            points = 0;
+        } else {
+            points = Integer.parseInt(this.pointsTextField.getText());
+        }
+
+        Stone stone = new Stone(
+                this.colorPicker.getValue(),
+                points,
+                this.visibleCheckbox.isSelected(),
+                this.undestroyableCheckBox.isSelected()
+        );
+        return stone;
     }
 
     private void setAnimationTimer() {

@@ -1,11 +1,54 @@
 package com.linuxluigi.edu.model.board;
 
+import com.linuxluigi.edu.model.StaticVar;
+import javafx.scene.paint.Color;
+
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by fubu on 17.05.17.
  * Game field with every block, ball & user line
  */
 public class Board {
 
-    // size 15 x 15
+    // Boardsize 14x14
+    private final int boardRow = 14;
+    private final int boardColum = 14;
 
+    private List<Stone> stones = new ArrayList<Stone>();
+
+    public Board() {
+        generateDefaultBoard();
+    }
+
+    public void generateDefaultBoard() {
+
+        double stoneWidth = StaticVar.defaultWidth / this.boardColum;
+        double stoneHight = StaticVar.blockAreaHeight / this.boardRow;
+
+        for (int i = 0; i < boardRow; i++) {
+            for (int j = 0; j < boardColum; j++) {
+
+                // todo calculate position
+
+                double positionX = stoneWidth * j;
+                double positionY = stoneHight * i;
+
+                Stone stone = new Stone(Color.GRAY, 100, true,
+                true, positionX, positionY, stoneWidth, stoneHight, i, j);
+
+                this.stones.add(stone);
+            }
+        }
+
+    }
+
+    public List<Stone> getStones() {
+        return stones;
+    }
+
+    public void setStones(List<Stone> stones) {
+        this.stones = stones;
+    }
 }

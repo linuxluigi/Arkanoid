@@ -5,6 +5,7 @@ import com.linuxluigi.edu.model.Model;
 import com.linuxluigi.edu.view.MainFrame;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * Created by fubu on 17.05.17.

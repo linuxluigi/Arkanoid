@@ -18,7 +18,12 @@ public class Model {
     private Level level;
     private Stage primaryStage = null;
 
+    // Objects
     private PlayerBare playerBare;
+
+    // GameModes
+    private boolean fullscreen = false;
+    private boolean editmode = false;
 
     public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
@@ -88,7 +93,22 @@ public class Model {
     }
 
     public void setPlayerCenter(double width, double height) {
-        System.out.println("main model: " + height);
         playerBare.setCenter(width, height);
+    }
+
+    public boolean isFullscreen() {
+        return fullscreen;
+    }
+
+    public void setFullscreen(boolean fullscreen) {
+        this.fullscreen = fullscreen;
+    }
+
+    public boolean isEditmode() {
+        return editmode;
+    }
+
+    public void setEditmode(boolean editmode) {
+        this.editmode = editmode;
     }
 }
