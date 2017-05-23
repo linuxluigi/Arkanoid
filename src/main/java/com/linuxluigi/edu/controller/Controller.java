@@ -22,7 +22,8 @@ public class Controller {
     public void show() {
         this.view.show(model.getPrimaryStage());
         addEventHandler();
-        this.view.initGame(model.getPlayerBare(), model.getBoard());
+        this.view.initGame(model.getPlayerBare(), model.getBoard(), model.getBall());
+        updateViewObjects();
     }
 
     public void addEventHandler() {
@@ -34,8 +35,13 @@ public class Controller {
     }
 
     protected static void updateViewObjects() {
-        view.updateAllObjects(getModel().getPlayerBare(), getModel().getBoard());
-        //todo add stones && ball && points && live
+        view.updateAllObjects(
+                getModel().getPlayerBare(),
+                getModel().getBoard(),
+                getModel().getLives(),
+                getModel().getPoints(),
+                getModel().getBall()
+        );
     }
 
     protected static Model getModel() {

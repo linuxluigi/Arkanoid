@@ -4,17 +4,18 @@ package com.linuxluigi.edu.view;/**
 
 import com.linuxluigi.edu.model.board.Board;
 import com.linuxluigi.edu.model.board.Stone;
+import com.linuxluigi.edu.model.gameObject.Ball;
 import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.event.ActionEvent;
 import javafx.geometry.Insets;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -25,10 +26,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Ellipse;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 
 import java.awt.*;
 import java.util.*;
@@ -44,6 +48,10 @@ public class MainFrame {
     private Pane pane;
     private Group group = new Group();
 
+    // UserInterface
+    private Label score;
+    private Label live;
+
     // EditDock
     private final ColorPicker colorPicker = new ColorPicker();
     private TextField pointsTextField;
@@ -54,6 +62,7 @@ public class MainFrame {
     private Group stonesRectangle = new Group();
     private Rectangle playerBare;
     private java.util.List<Rectangle> stones = new ArrayList<Rectangle>();
+    private Ellipse ball;
 
     public MainFrame(double startWidth, double startHeight) {
         this.borderPane = new BorderPane();
@@ -205,6 +214,12 @@ public class MainFrame {
     }
 
     public void fullscreenToggle() {
+        if (this.primaryStage.isFullScreen()) {
+            enableMouseCursor();
+        } else {
+            this.borderPane.setTop(null);
+        }
+
         this.primaryStage.setFullScreen(!this.primaryStage.isFullScreen());
     }
 
@@ -229,14 +244,21 @@ public class MainFrame {
      *
      * @param playerBare
      */
-    public void initGame(PlayerBare playerBare, Board board) {
+    public void initGame(PlayerBare playerBare, Board board, Ball ball) {
 
         // Playerbare
         this.playerBare = new Rectangle(playerBare.getRelativWidth(), playerBare.getRelativHeight());
         this.playerBare.setX(playerBare.getRelativPositionX());
         this.playerBare.setY(playerBare.getRelativPositionY());
         this.playerBare.setFill(playerBare.getColor());
+        this.playerBare.setStroke(Color.BLACK);
         this.group.getChildren().add(this.playerBare); //add obect to the group
+
+        // Ball
+        this.ball = new Ellipse();
+        this.ball.setStroke(Color.BLACK);
+        this.ball.setFill(Color.BLUEVIOLET);
+        this.group.getChildren().add(this.ball);
 
         // Stones
         for (Stone stone : board.getStones()) {
@@ -251,9 +273,19 @@ public class MainFrame {
             this.stones.add(stoneRectangle);
             this.stonesRectangle.getChildren().add(stoneRectangle); //add obect to the group
         }
+
+        // UserInterface
+        this.live = new Label();
+        this.live.setFont(Font.font("Amble CN", FontWeight.BOLD, 30));
+        this.stonesRectangle.getChildren().add(this.live);
+
+        this.score = new Label();
+        this.score.setFont(Font.font("Amble CN", FontWeight.BOLD, 30));
+        this.score.relocate(0, 0);
+        this.stonesRectangle.getChildren().add(this.score);
     }
 
-    public void updateAllObjects(PlayerBare playerBare, Board board) {
+    public void updateAllObjects(PlayerBare playerBare, Board board, int lives, int score, Ball ball) {
         // playerBare
         this.playerBare.setWidth(playerBare.getRelativWidth());
         this.playerBare.setHeight(playerBare.getRelativHeight());
@@ -267,7 +299,24 @@ public class MainFrame {
         for (int i = 0; i < this.stones.size(); i++) {
             stones.get(i).setFill(oldStones.get(i).getColor());
             stones.get(i).setVisible(oldStones.get(i).isVisible());
+            stones.get(i).setX(oldStones.get(i).getRelativePositionX());
+            stones.get(i).setY(oldStones.get(i).getRelativePositionY());
+            stones.get(i).setWidth(oldStones.get(i).getRelativeWidth());
+            stones.get(i).setHeight(oldStones.get(i).getRelativeHeight());
         }
+
+        // UserInterface
+        double labelWidth = 150;
+        double positionX = getPaneWidth() - labelWidth;
+        this.live.relocate(positionX, 0);
+        this.live.setText("Live: " + lives);
+        this.score.setText("Score: " + score);
+
+        // Ball
+        this.ball.setCenterX(ball.getRelativeCenterX());
+        this.ball.setCenterY(ball.getRelativeCenterY());
+        this.ball.setRadiusX(ball.getRelativRadius());
+        this.ball.setRadiusY(ball.getRelativRadius());
     }
 
     public void disableMouseCursor() {

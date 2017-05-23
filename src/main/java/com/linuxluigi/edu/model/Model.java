@@ -1,11 +1,13 @@
 package com.linuxluigi.edu.model;
 
 import com.linuxluigi.edu.model.board.Board;
-import com.linuxluigi.edu.model.game.Game;
-import com.linuxluigi.edu.model.game.Highscore;
+import com.linuxluigi.edu.model.gameObject.Ball;
 import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import com.linuxluigi.edu.model.level.Level;
 import javafx.stage.Stage;
+
+import static com.linuxluigi.edu.model.StaticVar.defaultHeight;
+import static com.linuxluigi.edu.model.StaticVar.defaultWidth;
 
 /**
  * Created by fubu on 17.05.17.
@@ -13,13 +15,16 @@ import javafx.stage.Stage;
  */
 public class Model {
     private Board board;
-    private Game game;
-    private Highscore highscore;
     private Level level;
     private Stage primaryStage = null;
 
+    // Game
+    private int lives = 3;  // 3 == Default live at start
+    private int points = 0;
+
     // Objects
     private PlayerBare playerBare;
+    private Ball ball;
 
     // GameModes
     private boolean fullscreen = false;
@@ -28,9 +33,8 @@ public class Model {
     public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
         this.board = new Board();
-        this.game = new Game();
-        this.highscore = new Highscore();
         this.level = new Level();
+        this.ball = new Ball(defaultWidth / 2, defaultHeight - 260, 30);
         setWindowWidth(startWidth);
         setWindowHeight(startHeight);
         init();
@@ -54,22 +58,6 @@ public class Model {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public Game getGame() {
-        return game;
-    }
-
-    public void setGame(Game game) {
-        this.game = game;
-    }
-
-    public Highscore getHighscore() {
-        return highscore;
-    }
-
-    public void setHighscore(Highscore highscore) {
-        this.highscore = highscore;
     }
 
     public Level getLevel() {
@@ -110,5 +98,29 @@ public class Model {
 
     public void setEditmode(boolean editmode) {
         this.editmode = editmode;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public Ball getBall() {
+        return ball;
+    }
+
+    public void setBall(Ball ball) {
+        this.ball = ball;
     }
 }

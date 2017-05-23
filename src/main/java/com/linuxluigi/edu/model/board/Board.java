@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by fubu on 17.05.17.
- * Game field with every block, ball & user line
+ * Game field with every block, Ball & user line
  */
 public class Board {
 
