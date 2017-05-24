@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -51,6 +52,7 @@ public class MainFrame {
     // UserInterface
     private Label score;
     private Label live;
+    private Label gameOver = new Label();
 
     // EditDock
     private final ColorPicker colorPicker = new ColorPicker();
@@ -148,7 +150,7 @@ public class MainFrame {
 
         // Block Points
         final Text pointsLabel = new Text("Block Points:");
-        this.pointsTextField = new TextField();
+        this.pointsTextField = new TextField("100");
         // check for numbers only
         this.pointsTextField.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -282,7 +284,9 @@ public class MainFrame {
         this.score = new Label();
         this.score.setFont(Font.font("Amble CN", FontWeight.BOLD, 30));
         this.score.relocate(0, 0);
+
         this.stonesRectangle.getChildren().add(this.score);
+        this.stonesRectangle.getChildren().add(this.gameOver);
     }
 
     public void updateAllObjects(PlayerBare playerBare, Board board, int lives, int score, Ball ball) {
@@ -311,6 +315,7 @@ public class MainFrame {
         this.live.relocate(positionX, 0);
         this.live.setText("Live: " + lives);
         this.score.setText("Score: " + score);
+        this.gameOver.relocate(getPaneWidth() / 2 - 150, getPaneWidth() / 2 - 70);
 
         // Ball
         this.ball.setCenterX(ball.getRelativeCenterX());
@@ -362,16 +367,21 @@ public class MainFrame {
         return stone;
     }
 
-    private void setAnimationTimer() {
-        new AnimationTimer() { //animate all circles
-            @Override
-            public void handle(long now) {
+    public void toogleGameOver(boolean setGameOver) {
+        if (setGameOver) {
+            this.gameOver.setFont(Font.font("Amble CN", FontWeight.BOLD, 50));
+            this.gameOver.setTextFill(Color.BLUE);
+            this.gameOver.setText("GameOver");
+        } else {
+            this.gameOver.setText("");
+        }
+    }
 
-                try {
-                    Thread.sleep(10);
-                } catch (InterruptedException e) {
-                }
-            }
-        }.start();
+    public boolean isToolbarActivat () {
+        if (this.borderPane.getTop() != null) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -15,7 +15,5 @@ public class MenubarViewFullscreen implements EventHandler<ActionEvent> {
         if (Controller.getModel().isFullscreen() && !Controller.getModel().isEditmode()) {
             Controller.getView().disableMouseCursor();
         }
-
-        //todo disable mac toolbar
     }
 }

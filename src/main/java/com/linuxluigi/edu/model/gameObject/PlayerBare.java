@@ -2,6 +2,8 @@ package com.linuxluigi.edu.model.gameObject;
 
 import javafx.scene.paint.Color;
 
+import java.sql.Time;
+
 import static com.linuxluigi.edu.model.StaticVar.*;
 
 /**
@@ -16,12 +18,18 @@ public class PlayerBare {
 
     private Color color;
 
+    private long time;
+    private double speedX = 0;
+    private double speedY = 0;
+
     public PlayerBare(double positionX, double positionY, double lengthX, double lengthY, Color color) {
         PositionX = positionX;
         PositionY = positionY;
         this.width = lengthX;
         this.height = lengthY;
         this.color = color;
+
+        this.time = System.currentTimeMillis();
     }
 
     public PlayerBare() {
@@ -41,6 +49,13 @@ public class PlayerBare {
     }
 
     public void setPositionX(double positionX) {
+        // set speed
+        if (this.time - System.currentTimeMillis() <= 500) {
+            this.speedX = positionX - this.PositionX;
+        } else {
+            this.speedX = 0;
+        }
+
         PositionX = positionX;
     }
 
@@ -53,6 +68,13 @@ public class PlayerBare {
     }
 
     public void setPositionY(double positionY) {
+        // set speed
+        if (this.time - System.currentTimeMillis() <= 500) {
+            this.speedY = positionY - this.PositionY;
+        } else {
+            this.speedY = 0;
+        }
+
         PositionY = positionY;
     }
 
@@ -84,6 +106,14 @@ public class PlayerBare {
         return color;
     }
 
+    public double getSpeedX() {
+        return speedX;
+    }
+
+    public double getSpeedY() {
+        return speedY;
+    }
+
     public void setColor(Color color) {
         this.color = color;
     }
@@ -101,5 +131,17 @@ public class PlayerBare {
             setPositionY(playerAreaHeight - this.height / 2);
         }
 
+    }
+
+    public boolean isHitByBall(Ball ball) {
+        if (this.PositionX <= ball.getCenterX() + ball.getRadius()
+                & ball.getCenterX() - ball.getRadius() <= this.PositionX + this.width
+                & this.PositionY <= ball.getCenterY() + ball.getRadius()
+                & ball.getCenterY() - ball.getRadius() <= this.PositionY + this.height
+                & ball.getDirectionY() >= 0) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

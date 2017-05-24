@@ -28,8 +28,16 @@ public class Ball {
         this.positionX = centerX - this.radius;
     }
 
+    public double getCenterX() {
+        return this.positionX + this.radius;
+    }
+
     public void setCenterY(double centerY) {
         this.positionY = centerY - this.radius;
+    }
+
+    public double getCenterY() {
+        return this.positionY + this.radius;
     }
 
     public double getRelativeCenterX() {
@@ -93,5 +101,17 @@ public class Ball {
         radius = radius / 2;
 
         return radius;
+    }
+
+    public void setOppsiteDirection() {
+        this.directionX = this.directionX * -1;
+        this.directionY = this.directionY * -1;
+    }
+
+    public void disableBall() {
+        this.directionX = 0;
+        this.directionY = 0;
+        this.positionX = this.radius * - 20;
+        this.positionY = this.radius * - 20;
     }
 }

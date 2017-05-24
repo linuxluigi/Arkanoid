@@ -30,8 +30,6 @@ public class Board {
         for (int i = 0; i < boardRow; i++) {
             for (int j = 0; j < boardColum; j++) {
 
-                // todo calculate position
-
                 double positionX = stoneWidth * j;
                 double positionY = stoneHight * i;
 

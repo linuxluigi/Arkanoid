@@ -123,4 +123,8 @@ public class Model {
     public void setBall(Ball ball) {
         this.ball = ball;
     }
+
+    public void newBall() {
+        this.ball = new Ball(defaultWidth / 2, defaultHeight - 260, 30);
+    }
 }

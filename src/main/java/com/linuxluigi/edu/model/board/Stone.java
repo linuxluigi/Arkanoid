@@ -1,6 +1,7 @@
 package com.linuxluigi.edu.model.board;
 
 import com.linuxluigi.edu.model.StaticVar;
+import com.linuxluigi.edu.model.gameObject.Ball;
 import javafx.scene.paint.Color;
 
 import static com.linuxluigi.edu.model.StaticVar.relativeHeight;
@@ -160,6 +161,17 @@ public class Stone {
         } else {
             return false;
         }
+    }
 
+    public boolean isHitByBall(Ball ball) {
+        if (this.positionX <= ball.getCenterX() + ball.getRadius()
+                & ball.getCenterX() - ball.getRadius() <= this.positionX + this.width
+                & this.positionY <= ball.getCenterY() + ball.getRadius()
+                & ball.getCenterY() - ball.getRadius() <= this.positionY + this.height
+                & this.visible) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

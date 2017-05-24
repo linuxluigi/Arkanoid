@@ -19,9 +19,17 @@ public class MouseClick implements EventHandler<MouseEvent> {
         if (Controller.getModel().isEditmode()) {
             for (Stone stone : Controller.getModel().getBoard().getStones()) {
 
+                double realY;
+
+                if (Controller.getView().isToolbarActivat()) {
+                    realY = event.getY() - 30; // Toolbarsize
+                } else {
+                    realY = event.getY();
+                }
+
                 if (stone.isHit(
-                        absoluteWidth(event.getX()),
-                        absoluteHeight(event.getSceneY())
+                        absoluteWidth(event.getSceneX()),
+                        absoluteHeight(realY)
                 )) {
                     Stone newStone = Controller.getView().getEditStone();
 
