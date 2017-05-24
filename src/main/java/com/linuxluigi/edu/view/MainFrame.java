@@ -93,6 +93,12 @@ public class MainFrame {
         MenuItem newMenuItem = new MenuItem("New", new ImageView("/fontAwesome/16/font-awesome_4-7-0_file_16_0_f39c12_none.png"));
         newMenuItem.setAccelerator(KeyCombination.keyCombination("shortcut+n"));
 
+        Menu selectLevelMenu = new Menu("Select Level");
+        selectLevelMenu.getItems().addAll(
+                new MenuItem("1"),
+                new MenuItem("2"),
+                new MenuItem("3"));
+
         MenuItem openMenuItem = new MenuItem("Open", new ImageView("/fontAwesome/16/font-awesome_4-7-0_folder-open_16_0_f39c12_none.png"));
         openMenuItem.setAccelerator(KeyCombination.keyCombination("shortcut+o"));
 
@@ -104,7 +110,7 @@ public class MainFrame {
 
         MenuItem exitMenuItem = new MenuItem("Exit", new ImageView("/fontAwesome/16/font-awesome_4-7-0_times_16_0_f39c12_none.png"));
 
-        fileMenu.getItems().addAll(newMenuItem, openMenuItem, saveMenuItem, saveAsMenuItem,
+        fileMenu.getItems().addAll(newMenuItem, selectLevelMenu, openMenuItem, saveMenuItem, saveAsMenuItem,
                 new SeparatorMenuItem(), exitMenuItem);
 
         // Edit Menu

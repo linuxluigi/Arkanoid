@@ -40,10 +40,7 @@ public class Model {
     public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
 
-        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
-        this.resourceLevelFile = new File(classloader.getResource("1.json").getFile());
-
-        this.board = Level.loadLevel(this.resourceLevelFile);
+        loadLevelFromResources("1");
 
         setWindowWidth(startWidth);
         setWindowHeight(startHeight);
@@ -148,6 +145,14 @@ public class Model {
 
     public void saveLevel() {
         Level.saveLevel(this.levelFile, this.board);
+    }
+
+    public void loadLevelFromResources(String levelFile) {
+        this.levelFile = null;
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        this.resourceLevelFile = new File(classloader.getResource("level/" + levelFile + ".json").getFile());
+        this.board = Level.loadLevel(this.resourceLevelFile);
+        restartGame();
     }
 
     /**
