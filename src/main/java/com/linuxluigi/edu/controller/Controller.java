@@ -1,11 +1,16 @@
 package com.linuxluigi.edu.controller;
 
 import com.linuxluigi.edu.model.Model;
+import com.linuxluigi.edu.model.Sound;
 import com.linuxluigi.edu.model.StaticVar;
 import com.linuxluigi.edu.model.board.Stone;
 import com.linuxluigi.edu.view.*;
 import javafx.animation.AnimationTimer;
 import javafx.scene.paint.Color;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 import static com.linuxluigi.edu.model.StaticVar.defaultHeight;
 import static com.linuxluigi.edu.model.StaticVar.defaultWidth;
@@ -86,9 +91,9 @@ public class Controller {
                         } else {
                             model.getBall().setDirectionY(model.getPlayerBare().getSpeedY());
                         }
-
                         model.getBall().setDirectionX(model.getPlayerBare().getSpeedX());
                     }
+                    Sound.playKling();
                 }
 
                 // if hit the boarder
@@ -96,6 +101,10 @@ public class Controller {
                         || model.getBall().getCenterX() - model.getBall().getRadius() <= 0
                         || model.getBall().getCenterY() - model.getBall().getRadius() <= 0) {
                     model.getBall().setOppsiteDirection();
+
+                    if (Controller.getModel().getLives() != 0) {
+                        Sound.playWall();
+                    }
                 }
 
                 // if lost a live
@@ -107,6 +116,7 @@ public class Controller {
                         view.toogleGameOver(true);
                     } else {
                         model.newBall();
+                        Sound.playBall();
                     }
                 }
 
@@ -124,6 +134,7 @@ public class Controller {
                 }
                 if (isHit) {
                     model.getBall().setOppsiteDirection();
+                    Sound.playBlob();
                 }
 
                 updateViewObjects();
