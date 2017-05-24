@@ -58,10 +58,12 @@ public class Controller {
             @Override
             public void handle(long now) {
                 // Ball movement
-                double newPositionX = model.getBall().getCenterX() + model.getBall().getDirectionX();
-                double newPositionY = model.getBall().getCenterY() + model.getBall().getDirectionY();
-                model.getBall().setCenterX(newPositionX);
-                model.getBall().setCenterY(newPositionY);
+                if (!model.isEditmode()) {
+                    double newPositionX = model.getBall().getCenterX() + model.getBall().getDirectionX();
+                    double newPositionY = model.getBall().getCenterY() + model.getBall().getDirectionY();
+                    model.getBall().setCenterX(newPositionX);
+                    model.getBall().setCenterY(newPositionY);
+                }
 
                 // if Ball hit player
                 if (model.getPlayerBare().isHitByBall(model.getBall())) {

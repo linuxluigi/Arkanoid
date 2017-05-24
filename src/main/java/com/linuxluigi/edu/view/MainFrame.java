@@ -269,7 +269,8 @@ public class MainFrame {
             stoneRectangle.setY(stone.getRelativePositionY());
             stoneRectangle.setWidth(stone.getRelativeWidth());
             stoneRectangle.setHeight(stone.getRelativeHeight());
-            stoneRectangle.setFill(stone.getColor());
+            stoneRectangle.setFill(Color.valueOf(stone.getColor()));
+            stoneRectangle.setFill(Color.valueOf("#ffffff"));
             stoneRectangle.setVisible(stone.isVisible());
             stoneRectangle.setStroke(Color.BLACK);
             this.stones.add(stoneRectangle);
@@ -301,7 +302,7 @@ public class MainFrame {
         List<Stone> oldStones = board.getStones();
 
         for (int i = 0; i < this.stones.size(); i++) {
-            stones.get(i).setFill(oldStones.get(i).getColor());
+            stones.get(i).setFill(Color.valueOf(oldStones.get(i).getColor()));
             stones.get(i).setVisible(oldStones.get(i).isVisible());
             stones.get(i).setX(oldStones.get(i).getRelativePositionX());
             stones.get(i).setY(oldStones.get(i).getRelativePositionY());
@@ -346,6 +347,7 @@ public class MainFrame {
 
     /**
      * Return a Stone with the value of the EditDock
+     *
      * @return Stone object
      */
     public Stone getEditStone() {
@@ -359,7 +361,7 @@ public class MainFrame {
         }
 
         Stone stone = new Stone(
-                this.colorPicker.getValue(),
+                this.colorPicker.getValue().toString(),
                 points,
                 this.visibleCheckbox.isSelected(),
                 this.undestroyableCheckBox.isSelected()
@@ -377,7 +379,7 @@ public class MainFrame {
         }
     }
 
-    public boolean isToolbarActivat () {
+    public boolean isToolbarActivat() {
         if (this.borderPane.getTop() != null) {
             return true;
         } else {

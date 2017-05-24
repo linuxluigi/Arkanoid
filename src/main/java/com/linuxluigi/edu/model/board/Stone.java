@@ -11,7 +11,7 @@ import static com.linuxluigi.edu.model.StaticVar.relativeWidth;
  * Created by fubu on 17.05.17.
  */
 public class Stone {
-    private Color color;
+    private String color;
     private int pointValue;
     private boolean visible;
     private boolean destroyable;
@@ -26,7 +26,7 @@ public class Stone {
     private int row;
     private int colum;
 
-    public Stone(Color color, int pointValue, boolean visible,
+    public Stone(String color, int pointValue, boolean visible,
                  boolean destroyable, double positionX, double positionY,
                  double width, double height, int row, int colum) {
         this.color = color;
@@ -41,7 +41,7 @@ public class Stone {
         this.colum = colum;
     }
 
-    public Stone(Color color, int pointValue, boolean visible, boolean destroyable) {
+    public Stone(String color, int pointValue, boolean visible, boolean destroyable) {
         this.color = color;
         this.pointValue = pointValue;
         this.visible = visible;
@@ -49,11 +49,11 @@ public class Stone {
     }
 
 
-    public Color getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(Color color) {
+    public void setColor(String color) {
         this.color = color;
     }
 

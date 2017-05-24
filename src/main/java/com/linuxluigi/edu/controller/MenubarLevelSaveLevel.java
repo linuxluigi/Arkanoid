@@ -1,6 +1,6 @@
 package com.linuxluigi.edu.controller;
 
-import com.linuxluigi.edu.controller.Controller;
+import com.linuxluigi.edu.view.DialogWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -9,6 +9,12 @@ import javafx.event.EventHandler;
  */
 public class MenubarLevelSaveLevel implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
-        System.out.println("as");
+        if (Controller.getModel().getLevelFile() == null) {
+            Controller.getModel().setLevelFile(
+                    DialogWindow.getSaveFile(Controller.getView().getScene())
+            );
+        }
+
+        Controller.getModel().saveLevel();
     }
 }

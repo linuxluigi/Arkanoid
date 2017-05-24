@@ -6,6 +6,8 @@ import com.linuxluigi.edu.model.gameObject.PlayerBare;
 import com.linuxluigi.edu.model.level.Level;
 import javafx.stage.Stage;
 
+import java.io.File;
+
 import static com.linuxluigi.edu.model.StaticVar.defaultHeight;
 import static com.linuxluigi.edu.model.StaticVar.defaultWidth;
 
@@ -14,9 +16,14 @@ import static com.linuxluigi.edu.model.StaticVar.defaultWidth;
  * Main Model
  */
 public class Model {
+    // active board on witch the user play
     private Board board;
-    private Level level;
+
     private Stage primaryStage = null;
+
+    // Level File
+    private File levelFile;
+    private File resourceLevelFile;
 
     // Game
     private int lives = 3;  // 3 == Default live at start
@@ -32,11 +39,15 @@ public class Model {
 
     public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
-        this.board = new Board();
-        this.level = new Level();
-        this.ball = new Ball(defaultWidth / 2, defaultHeight - 260, 30);
+
+        ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+        this.resourceLevelFile = new File(classloader.getResource("1.json").getFile());
+
+        this.board = Level.loadLevel(this.resourceLevelFile);
+
         setWindowWidth(startWidth);
         setWindowHeight(startHeight);
+        restartGame();
         init();
     }
 
@@ -58,14 +69,6 @@ public class Model {
 
     public void setBoard(Board board) {
         this.board = board;
-    }
-
-    public Level getLevel() {
-        return level;
-    }
-
-    public void setLevel(Level level) {
-        this.level = level;
     }
 
     public Stage getPrimaryStage() {
@@ -126,5 +129,38 @@ public class Model {
 
     public void newBall() {
         this.ball = new Ball(defaultWidth / 2, defaultHeight - 260, 30);
+    }
+
+    public File getLevelFile() {
+        return levelFile;
+    }
+
+    public void setLevelFile(File levelFile) {
+        this.levelFile = levelFile;
+    }
+
+    public void loadLevel() {
+        this.board = Level.loadLevel(this.levelFile);
+        this.points = 0;
+        this.lives = 3;
+        newBall();
+    }
+
+    public void saveLevel() {
+        Level.saveLevel(this.levelFile, this.board);
+    }
+
+    /**
+     * Complete restart of the game
+     */
+    public void restartGame() {
+        if (this.levelFile != null) {
+            this.board = Level.loadLevel(this.levelFile);
+        } else {
+            this.board = Level.loadLevel(this.resourceLevelFile);
+        }
+        this.points = 0;
+        this.lives = 3;
+        newBall();
     }
 }
