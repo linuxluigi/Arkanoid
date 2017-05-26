@@ -2,7 +2,6 @@ package com.linuxluigi.edu.controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 
 /**
@@ -14,6 +13,8 @@ public class MenubarSelectLevel implements EventHandler<ActionEvent> {
         MenuItem menuItem = (MenuItem) event.getSource();
 
         Controller.getModel().loadLevelFromResources(menuItem.getText());
+
+        Controller.getView().setGameMessage("");
 
     }
 }

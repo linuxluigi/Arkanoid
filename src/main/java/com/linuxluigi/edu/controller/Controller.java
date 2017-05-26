@@ -2,15 +2,9 @@ package com.linuxluigi.edu.controller;
 
 import com.linuxluigi.edu.model.Model;
 import com.linuxluigi.edu.model.Sound;
-import com.linuxluigi.edu.model.StaticVar;
 import com.linuxluigi.edu.model.board.Stone;
 import com.linuxluigi.edu.view.*;
 import javafx.animation.AnimationTimer;
-import javafx.scene.paint.Color;
-
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 
 import static com.linuxluigi.edu.model.StaticVar.defaultHeight;
 import static com.linuxluigi.edu.model.StaticVar.defaultWidth;
@@ -97,7 +91,7 @@ public class Controller {
                         || model.getBall().getCenterX() - model.getBall().getRadius() <= 0) {
                     model.getBall().setOppsiteDirectionX();
 
-                    if (Controller.getModel().getLives() != 0) {
+                    if (Controller.getModel().getLives() != 0 & !Controller.getModel().getBoard().getGameWin()) {
                         Sound.playWall();
                     }
                 }
@@ -106,7 +100,7 @@ public class Controller {
                 if (model.getBall().getCenterY() - model.getBall().getRadius() <= 0) {
                     model.getBall().setOppsiteDirectionY();
 
-                    if (Controller.getModel().getLives() != 0) {
+                    if (Controller.getModel().getLives() != 0 & !Controller.getModel().getBoard().getGameWin()) {
                         Sound.playWall();
                     }
                 }
@@ -117,7 +111,11 @@ public class Controller {
 
                     if (model.getLives() == 0) {
                         model.getBall().disableBall();
-                        view.toogleGameOver(true);
+
+                        if (!view.getGameMessage().equals("Game Win!") & !view.getGameMessage().equals("Gameover")) {
+                            Sound.playLoser();
+                        }
+
                     } else {
                         model.newBall();
                         Sound.playBall();
@@ -153,9 +151,13 @@ public class Controller {
                     Sound.playBlob();
                 }
 
-                // todo add game end with a win
-                // add sound
-                // add Text
+                if (model.getBoard().getGameWin()
+                        & !model.isEditmode()
+                        & !view.getGameMessage().equals("Game Win!")) {
+                    view.setGameMessage("Game Win!");
+                    model.getBall().disableBall();
+                    Sound.playFinish();
+                }
 
                 updateViewObjects();
                 try {

@@ -49,6 +49,20 @@ public class Board implements Cloneable {
         this.stones = stones;
     }
 
+    public boolean getGameWin () {
+
+        boolean gameWon = true;
+
+        for (Stone stone: this.stones) {
+            if (stone.isVisible()
+                    & !stone.isDestroyable()) {
+                gameWon = false;
+            }
+        }
+
+        return gameWon;
+    }
+
     @Override
     public Object clone() throws CloneNotSupportedException {
         return super.clone();

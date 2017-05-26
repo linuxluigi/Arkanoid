@@ -10,6 +10,6 @@ public class MenubarEditLevel implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         Controller.getView().toggleEditBox();
         Controller.getModel().setEditmode(!Controller.getModel().isEditmode());
-
+        Controller.getView().setGameMessage("");
     }
 }

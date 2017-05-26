@@ -1,8 +1,5 @@
 package com.linuxluigi.edu.controller;
 
-import com.linuxluigi.edu.controller.Controller;
-import com.linuxluigi.edu.model.Model;
-import com.linuxluigi.edu.view.MainFrame;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
@@ -12,5 +9,6 @@ import javafx.event.EventHandler;
 public class MenubarLevelNewLevel implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
         Controller.getModel().restartGame();
+        Controller.getView().setGameMessage("");
     }
 }

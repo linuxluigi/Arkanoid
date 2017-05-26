@@ -6,12 +6,10 @@ import com.linuxluigi.edu.model.board.Board;
 import com.linuxluigi.edu.model.board.Stone;
 import com.linuxluigi.edu.model.gameObject.Ball;
 import com.linuxluigi.edu.model.gameObject.PlayerBare;
-import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.Cursor;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -52,7 +50,7 @@ public class MainFrame {
     // UserInterface
     private Label score;
     private Label live;
-    private Label gameOver = new Label();
+    private Label gameMessage = new Label();
 
     // EditDock
     private final ColorPicker colorPicker = new ColorPicker();
@@ -96,7 +94,9 @@ public class MainFrame {
         Menu selectLevelMenu = new Menu("Select Level", new ImageView("/fontAwesome/16/font-awesome_4-7-0_globe_16_0_f39c12_none.png"));
         selectLevelMenu.getItems().addAll(
                 new MenuItem("Rainbow"),
-                new MenuItem("HardCore"));
+                new MenuItem("HardCore"),
+                new MenuItem("Easy")
+        );
 
         MenuItem openMenuItem = new MenuItem("Open", new ImageView("/fontAwesome/16/font-awesome_4-7-0_folder-open_16_0_f39c12_none.png"));
         openMenuItem.setAccelerator(KeyCombination.keyCombination("shortcut+o"));
@@ -292,7 +292,7 @@ public class MainFrame {
         this.score.relocate(0, 0);
 
         this.stonesRectangle.getChildren().add(this.score);
-        this.stonesRectangle.getChildren().add(this.gameOver);
+        this.stonesRectangle.getChildren().add(this.gameMessage);
     }
 
     public void updateAllObjects(PlayerBare playerBare, Board board, int lives, int score, Ball ball) {
@@ -321,7 +321,7 @@ public class MainFrame {
         this.live.relocate(positionX, 0);
         this.live.setText("Live: " + lives);
         this.score.setText("Score: " + score);
-        this.gameOver.relocate(getPaneWidth() / 2 - 150, getPaneWidth() / 2 - 70);
+        this.gameMessage.relocate(getPaneWidth() / 2 - 150, getPaneWidth() / 2 - 70);
 
         // Ball
         this.ball.setCenterX(ball.getRelativeCenterX());
@@ -374,14 +374,16 @@ public class MainFrame {
         return stone;
     }
 
-    public void toogleGameOver(boolean setGameOver) {
-        if (setGameOver) {
-            this.gameOver.setFont(Font.font("Amble CN", FontWeight.BOLD, 50));
-            this.gameOver.setTextFill(Color.BLUE);
-            this.gameOver.setText("GameOver");
-        } else {
-            this.gameOver.setText("");
-        }
+    public void setGameMessage(String message) {
+
+        this.gameMessage.setFont(Font.font("Amble CN", FontWeight.BOLD, 50));
+        this.gameMessage.setTextFill(Color.BLUE);
+        this.gameMessage.setText(message);
+
+    }
+
+    public String getGameMessage() {
+        return gameMessage.getText();
     }
 
     public boolean isToolbarActivat() {

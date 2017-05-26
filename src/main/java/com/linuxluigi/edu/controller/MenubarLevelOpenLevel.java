@@ -1,6 +1,5 @@
 package com.linuxluigi.edu.controller;
 
-import com.linuxluigi.edu.controller.Controller;
 import com.linuxluigi.edu.view.DialogWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -17,5 +16,6 @@ public class MenubarLevelOpenLevel implements EventHandler<ActionEvent> {
 
         Controller.getModel().loadLevel();
         Controller.updateViewObjects();
+        Controller.getView().setGameMessage("");
     }
 }
