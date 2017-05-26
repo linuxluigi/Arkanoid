@@ -1,5 +1,8 @@
 # Arkanoid
 
+Simple funny Arkanoid clone with level Editor :)
+
+![alt text](Screenshot.png "Ackanoid")
 
 # Credits
 
