@@ -25,14 +25,6 @@ public class Level {
         }
     }
 
-    /*
-    public static Board loadLevel(String json) {
-        Gson gson = new GsonBuilder().create();
-        Board board = gson.fromJson(json, Board.class);
-        return board;
-    }
-    */
-
     public static Board loadLevel(File file) {
         Board board = new Board();
 

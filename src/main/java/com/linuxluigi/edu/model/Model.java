@@ -7,6 +7,7 @@ import com.linuxluigi.edu.model.level.Level;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 
 import static com.linuxluigi.edu.model.StaticVar.defaultHeight;
 import static com.linuxluigi.edu.model.StaticVar.defaultWidth;
@@ -40,7 +41,15 @@ public class Model {
     public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
 
-        loadLevelFromResources("Rainbow");
+        try
+        {
+            loadLevelFromResources("Rainbow");
+        }
+        catch (Exception e)
+        {
+            this.board = new Board();
+        }
+
 
         setWindowWidth(startWidth);
         setWindowHeight(startHeight);
