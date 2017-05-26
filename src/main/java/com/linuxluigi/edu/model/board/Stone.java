@@ -174,4 +174,22 @@ public class Stone {
             return false;
         }
     }
+
+    public boolean isHitByBallY(Ball ball) {
+        if (this.positionX  + ball.getSpeedX() <= ball.getCenterX() + ball.getRadius()
+                & ball.getCenterX() - ball.getRadius() <= this.positionX + this.width - ball.getSpeedX()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public boolean isHitByBallX(Ball ball) {
+        if (this.positionY + ball.getSpeedY() <= ball.getCenterY() + ball.getRadius()
+                & ball.getCenterY() - ball.getRadius() <= this.positionY + this.height - ball.getSpeedY()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

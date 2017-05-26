@@ -11,6 +11,7 @@ public class StaticVar {
     private static double windowHeigh;
 
     public static final double minBallSpeed = 4;
+    public static final double maxBallSpeed = 20;
 
     // field for player & blocks in px
     public static final double playerAreaHeight = 864; // 80%

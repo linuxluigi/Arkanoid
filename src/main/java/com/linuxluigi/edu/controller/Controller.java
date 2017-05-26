@@ -86,21 +86,25 @@ public class Controller {
 
                     // starting punch
                     if (model.getBall().getDirectionY() == 0) {
-                        if (model.getPlayerBare().getSpeedY() >= minBallSpeed * -1) {
-                            model.getBall().setDirectionY(minBallSpeed * -1);
-                        } else {
-                            model.getBall().setDirectionY(model.getPlayerBare().getSpeedY());
-                        }
+                        model.getBall().setDirectionY(model.getPlayerBare().getSpeedY());
                         model.getBall().setDirectionX(model.getPlayerBare().getSpeedX());
                     }
                     Sound.playKling();
                 }
 
-                // if hit the boarder
+                // if hit the boarder left & right (X)
                 if (model.getBall().getCenterX() + model.getBall().getRadius() >= defaultWidth
-                        || model.getBall().getCenterX() - model.getBall().getRadius() <= 0
-                        || model.getBall().getCenterY() - model.getBall().getRadius() <= 0) {
-                    model.getBall().setOppsiteDirection();
+                        || model.getBall().getCenterX() - model.getBall().getRadius() <= 0) {
+                    model.getBall().setOppsiteDirectionX();
+
+                    if (Controller.getModel().getLives() != 0) {
+                        Sound.playWall();
+                    }
+                }
+
+                // if hit the boarder top (Y)
+                if (model.getBall().getCenterY() - model.getBall().getRadius() <= 0) {
+                    model.getBall().setOppsiteDirectionY();
 
                     if (Controller.getModel().getLives() != 0) {
                         Sound.playWall();
@@ -121,21 +125,37 @@ public class Controller {
                 }
 
                 // if Ball hit Block
-                boolean isHit = false;
+                boolean isHitX = false;
+                boolean isHitY = false;
                 for (Stone stone : model.getBoard().getStones()) {
                     if (stone.isHitByBall(model.getBall())) {
-                        isHit = true;
-                        stone.setVisible(false);
+
+                        isHitX = stone.isHitByBallX(model.getBall());
+                        isHitY = stone.isHitByBallY(model.getBall());
+
+                        if (!stone.isDestroyable()) {
+                            stone.setVisible(false);
+                        }
                         double speedMutiplicator = Math.abs(model.getBall().getDirectionX())
                                 + Math.abs(model.getBall().getDirectionY());
                         double score = stone.getPointValue() * speedMutiplicator;
                         model.setPoints(model.getPoints() + (int) score);
                     }
                 }
-                if (isHit) {
-                    model.getBall().setOppsiteDirection();
+
+                if (isHitX) {
+                    model.getBall().setOppsiteDirectionX();
                     Sound.playBlob();
                 }
+
+                if (isHitY) {
+                    model.getBall().setOppsiteDirectionY();
+                    Sound.playBlob();
+                }
+
+                // todo add game end with a win
+                // add sound
+                // add Text
 
                 updateViewObjects();
                 try {

@@ -1,5 +1,8 @@
 package com.linuxluigi.edu.model.gameObject;
 
+import com.linuxluigi.edu.model.StaticVar;
+
+import static com.linuxluigi.edu.model.StaticVar.maxBallSpeed;
 import static com.linuxluigi.edu.model.StaticVar.relativeHeight;
 import static com.linuxluigi.edu.model.StaticVar.relativeWidth;
 
@@ -53,7 +56,7 @@ public class Ball {
     }
 
     public void setDirectionX(double directionX) {
-        this.directionX = directionX;
+        this.directionX = getMaxSpeed(directionX);
     }
 
     public double getDirectionY() {
@@ -61,7 +64,54 @@ public class Ball {
     }
 
     public void setDirectionY(double directionY) {
-        this.directionY = directionY;
+        double currentSpeed = getMaxSpeed(directionY);
+        this.directionY = getMinSpeed(currentSpeed);
+    }
+
+    public double getSpeedX() {
+        return Math.abs(this.directionX);
+    }
+
+    public double getSpeedY() {
+        return Math.abs(this.directionY);
+    }
+
+    /**
+     * If the speed is higher than allowd it will be slow down
+     * @param speed
+     * @return
+     */
+    private double getMaxSpeed(double speed) {
+        double currentSpeed = Math.abs(speed);
+
+        if (currentSpeed > StaticVar.maxBallSpeed) {
+            currentSpeed = StaticVar.maxBallSpeed;
+        }
+
+        if (speed < 0) {
+            currentSpeed = currentSpeed * -1;
+        }
+
+        return currentSpeed;
+    }
+
+    /**
+     * If the speed is slower than allowed it will be speeden up
+     * @param speed
+     * @return
+     */
+    private double getMinSpeed(double speed) {
+        double currentSpeed = Math.abs(speed);
+
+        if (currentSpeed < StaticVar.minBallSpeed) {
+            currentSpeed = StaticVar.minBallSpeed;
+        }
+
+        if (speed < 0) {
+            currentSpeed = currentSpeed * -1;
+        }
+
+        return currentSpeed;
     }
 
     public double getPositionX() {
@@ -103,8 +153,11 @@ public class Ball {
         return radius;
     }
 
-    public void setOppsiteDirection() {
+    public void setOppsiteDirectionX() {
         this.directionX = this.directionX * -1;
+    }
+
+    public void setOppsiteDirectionY() {
         this.directionY = this.directionY * -1;
     }
 

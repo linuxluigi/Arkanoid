@@ -40,7 +40,7 @@ public class Model {
     public Model(Stage primaryStage, double startWidth, double startHeight) {
         this.primaryStage = primaryStage;
 
-        loadLevelFromResources("1");
+        loadLevelFromResources("Rainbow");
 
         setWindowWidth(startWidth);
         setWindowHeight(startHeight);

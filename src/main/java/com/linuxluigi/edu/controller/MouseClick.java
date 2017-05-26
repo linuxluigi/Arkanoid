@@ -34,7 +34,11 @@ public class MouseClick implements EventHandler<MouseEvent> {
                     Stone newStone = Controller.getView().getEditStone();
 
                     stone.setColor(newStone.getColor());
-                    stone.setPointValue(newStone.getPointValue());
+                    if (stone.isDestroyable()) {
+                        stone.setPointValue(newStone.getPointValue());
+                    } else {
+                        stone.setPointValue(0);
+                    }
                     stone.setVisible(newStone.isVisible());
                     stone.setDestroyable(newStone.isDestroyable());
 
